@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Nuevo Registro|UOC</title>
+<meta charset="UTF-8">
+<title>Nuevo Registro | UOC</title>
+    <style>
+        body{font-family: sans-serif;max-width: 1000px; margin: 40px auto;}
+        .error{color: red; font-size: 0.85em; display: none;}
+        .error.visible{display: block;}
+    </style>
 </head>
 <body>
 
     <h1>Registro</h1>
 
-    <form action="#" method="post">
-        <p>
+    <form  id=form-registro action="#" method="post">
+        <div>
             <label for="nombre">Nombre:</label><br>
             <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
-        </p>
-        <p>
+            <span class="error" id="error-nombre">Debe ingresar un nombre (mínimo 3 caracteres).</span>
+        </div>
+        <br>
+        <div>
             <label for="correo">Correo Electrónico:</label><br>
             <input type="email" id="correo" name="correo" placeholder="ejemplo@email.com" required>
-        </p>
-        <p>
+        </div>
+        <br>
+        <div>
             <label for="telefono">Teléfono:</label><br>
-            <input type="number" id="telefono" name="telefono" required>
-        </p>
-        <p>
+            <input type="number" id="telefono" name="telefono" placeholder="+56XXXXXXXXX" required>
+            <span class="error" id="error-telefono">Ingrese un número de Teléfono con formato válido</span>
+        </div>
+        <br>
+        <div>
             <label>Direccion Postal:</label><br>
-        </p>
-        <p>
+        </div>
+        <br>
+        <div>
             <label for="region">Región:</label><br>
             <select id="region" name="region">
-                <option value="arica"">Arica y Parinacota</option>
-                <option value="tarapaca">Tarapacá</option>
-                <option value="antofagasta">Antofagasta</option>
-                <option value="atacama">Atacama</option>
-                <option value="coquimbo">Coquimbo</option>
-                <option value="valparaiso">Valparaiso</option>
-                <option value="metropolitana">Metropolitana</option>
-                <option value="libertador">Libertador General Bernardo O'higgins</option>
-                <option value="maule">Maule</option>
-                <option value="ñuble">Ñuble</option>
-                <option value="biobio">Biobío</option>
-                <option value="araucania">La Araucanía</option>
-                <option value="losrios">Los Ríos</option>
-                <option value="loslagos">Los Lagos</option>
-                <option value="aysen">Aysen del General Carlos Ibañez del Campo</option>
-                <option value="magallanes">Magallanes y la Antartica Chilena</option>
-            </select>    
-        </p>
-        <p>
-            <label for="comuna">Comuna</label>
-        </p>
-
-
-
+            <option value="">--Seleccione--</option>
+            </select>
+            <span class="error" id="error-region">Debe Seleccionar una Región</span>    
+        </div>
+        <br>
+        <div>
+            <label for="comuna">Comuna</label><br>
+            <select  id="comuna" name="comuna">
+            <option value="">--Seleccione--</option>
+            </select>
+            <span class="error" id="error-comuna">Debe Seleccionar una Comuna</span>
+        </div>
+        <br>
+        <button type="submit">Finalizar Registro</button>
     </form>
+<script src="registro.js"></script>    
 
 </body>
 </html>
