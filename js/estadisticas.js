@@ -35,31 +35,26 @@ const layoutuavesmasvistas = {
   title:{ text:" Aves más Avistadas"}
   };
 
-Plotly.newPlot(torta_tipos,datatipos,layouttipos);
-Plotly.newPlot(torta_ubicaciones,dataubi,layoutubi);
-Plotly.newPlot(torta_avesmasvistas,datamasvistas,layoutuavesmasvistas);
+const containergrafico = document.getElementById("container-grafico");
 
+function mostrarGrafico(data, layout) {
+  Plotly.newPlot(containergrafico, data, layout);  
+}
 let botontipos=document.getElementById("tipos-aves");
+botontipos.addEventListener("click",(event)=>{
+  event.preventDefault();
+  mostrarGrafico(datatipos, layouttipos);
+})
+
 let botonubicaciones=document.getElementById("ubicaciones");
-let botonmasvistas=document.getElementById("masvistas");
+botonubicaciones.addEventListener("click",(event)=>{
+  event.preventDefault();
+  mostrarGrafico(dataubi, layoutubi);
+});
 
-botontipos.addEventListener("click",(event) =>{
-  event.preventDefault()
-torta_tipos.className="torta-mostrar";
-torta_ubicaciones.className="torta-nomostrar";
-torta_avesmasvistas.className="torta-nomostrar";
+let botonavesmasvisitadas=document.getElementById("masvistas")
+botonavesmasvisitadas.addEventListener("click",(event)=>{
+  event.preventDefault();
+  mostrarGrafico(datamasvistas, layoutuavesmasvistas);
 })
-botonubicaciones.addEventListener("click",(event) =>{
-  event.preventDefault()
-torta_tipos.className="torta-nomostrar";
-torta_ubicaciones.className="torta-mostrar";
-torta_avesmasvistas.className="torta-nomostrar";
-})
-botonmasvistas.addEventListener("click",(event) =>{
-  event.preventDefault()
-torta_tipos.className="torta-nomostrar";
-torta_ubicaciones.className="torta-nomostrar";
-torta_avesmasvistas.className="torta-mostrar";
-Plotly.Plots.resize(torta_avesmasvistas);
-})
-
+mostrarGrafico(datatipos, layouttipos);

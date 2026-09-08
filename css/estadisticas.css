@@ -47,15 +47,12 @@ body{
 .boton:hover{ background: #66BB6A; color: #fff; }
 
 
-/* tarjetas de los gráficos */
-.torta-mostrar,
-.torta-nomostrar{
+.torta-mostrar{
     max-width: 620px;
     margin: 0 auto;
+    margin-left: ;
     background: #fff;
     border-radius: 12px;
     padding: 12px;
     box-shadow: 0 10px 30px -12px rgba(0,0,0,0.5);
-}
-.torta-mostrar{ display: block; }
-.torta-nomostrar{ display: none;}
+};
