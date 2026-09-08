@@ -3,58 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <title>Nuevo Registro | UOC</title>
-    <style>
-        body{font-family: sans-serif;max-width: 1400px; margin: 40px auto;}
-        .inicio{font-size: 0.5em;}
-        .error{color: red; font-size: 0.85em; display: none;}
-        .error.visible{display: block;}
-    </style>
+    <link rel="stylesheet" href="../css/registro_nuevo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <a class="Inicio" href="index.html">Volver al Inicio </a>
-    <h1>Registro</h1>
-
-    <form class="formulario"  id=form-registro action="#" method="post">
-        <div>
-            <label for="nombre">Nombre:</label><br>
-            <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
-            <span class="error" id="error-nombre">Debe ingresar un nombre (mínimo 3 caracteres).</span>
-        </div>
-        <br>
-        <div>
-            <label for="correo">Correo Electrónico:</label><br>
-            <input type="email" id="correo" name="correo" placeholder="ejemplo@email.com" required>
-        </div>
-        <br>
-        <div>
-            <label for="telefono">Teléfono:</label><br>
-            <input type="number" id="telefono" name="telefono" placeholder="+56XXXXXXXXX" required>
-            <span class="error" id="error-telefono">Ingrese un número de Teléfono con formato válido</span>
-        </div>
-        <br>
-        <div>
-            <label>Direccion Postal:</label><br>
-        </div>
-        <br>
-        <div>
-            <label for="region">Región:</label><br>
-            <select id="region" name="region">
-            <option value="">--Seleccione--</option>
-            </select>
-            <span class="error" id="error-region">Debe Seleccionar una Región</span>    
-        </div>
-        <br>
-        <div>
-            <label for="comuna">Comuna</label><br>
-            <select  id="comuna" name="comuna">
-            <option value="">--Seleccione--</option>
-            </select>
-            <span class="error" id="error-comuna">Debe Seleccionar una Comuna</span>
-        </div>
-        <br>
-        <button type="submit">Finalizar Registro</button>
-    </form>
+    <div class="container-inicio">
+    <a class="inicio" href="index.html">Volver al Inicio </a>
+    </div>
+    <div class="container">
+        <h1>Registro</h1>
+        <form class="formulario"  id=form-registro action="#" method="post">
+            <div>
+                <label for="nombre">Nombre:</label><br>
+                <input class="grupo-input" type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
+                <span class="error" id="error-nombre">Debe ingresar un nombre (mínimo 3 caracteres).</span>
+            </div>
+            <br>
+            <div>
+                <label for="correo">Correo Electrónico:</label><br>
+                <input class="grupo-input" type="email" id="correo" name="correo" placeholder="ejemplo@email.com" required>
+            </div>
+            <br>
+            <div>
+                <label for="telefono">Teléfono:</label><br>
+                <input class="grupo-input" type="number" id="telefono" name="telefono" placeholder="+56XXXXXXXXX" required>
+                <span class="error" id="error-telefono">Ingrese un número de Teléfono con formato válido</span>
+            </div>
+            <br>
+            <div>
+                <label>Dirección Postal:</label><br>
+            </div>
+            <br>
+            <div>
+                <label for="region">Región:</label><br>
+                <select id="region" name="region">
+                <option value="">Seleccione</option>
+                </select>
+                <span class="error" id="error-region">Debe Seleccionar una Región</span>    
+            </div>
+            <br>
+            <div>
+                <label for="comuna">Comuna</label><br>
+                <select  id="comuna" name="comuna">
+                <option value="">Seleccione</option>
+                </select>
+                <span class="error" id="error-comuna">Debe Seleccionar una Comuna</span>
+            </div>
+            <br>
+            <button class="botones" type="submit">Finalizar Registro</button>
+        </form>
+    </div>
 <script src="../js/registro.js"></script>    
-
 </body>
 </html>

@@ -27,16 +27,16 @@ const validadorForm= (event) =>{
 
     if (!isValid){
         if (!validadorNombre(nombre.value)){
-            errorNombre.className="error.visible";
+            errorNombre.className="error visible";
         }
         if (!numeroVálido(numero.value)){
-            errorTelefono.className="error.visible"
+            errorTelefono.className="error visible"
         }
         if (!seEligioOpcion(region.value)){
-            errorRegion.className="error.visible"
+            errorRegion.className="error visible"
         }
         if (!seEligioOpcion(comuna.value)){
-            errorComuna.className="error.visible"
+            errorComuna.className="error visible"
         }
     }
     else{

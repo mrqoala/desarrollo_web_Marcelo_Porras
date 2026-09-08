@@ -40,19 +40,19 @@ const validadorAgregar= (event) =>{
 
     if (!isValid){
         if (!validadorNombre(nombreAve.value)){
-            errorNombre.className="error.visible";
+            errorNombre.className="error visible";
         }
         if (!seEligioOpcion(region.value)){
-            errorRegion.className="error.visible"
+            errorRegion.className="error visible"
         }
         if (!seEligioOpcion(comuna.value)){
-            errorComuna.className="error.visible"
+            errorComuna.className="error visible"
         }
         if(!seEligioOpcion(tipoAve.value)){
-            errorTipo.className="error.visible";
+            errorTipo.className="error visible";
         }
         if (subioFoto(imagen)){
-            errorFoto.className="error.visible";
+            errorFoto.className="error visible";
         }
 
         }
