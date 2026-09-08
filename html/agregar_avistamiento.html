@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Avistamiento|UOC</title>
+    <link rel="stylesheet" href="../css/registro_nuevo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container-inicio">
+    <a class="inicio" href="index.html">Volver al Inicio </a>
+    </div>
+    <div class="container">
+    <h1>Agregar Avistamiento</h1>
+    <form class="formulario" id="agregar_avistamiento" action="#" method="post">
+        <div>
+            <label for="nombre del Ave">Nombre del Ave</label>
+            <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Gorrión,Tórtola,etc..." required/>
+            <span class="error" id="error-nombre">Debe ingresar un nombre (mínimo 3 caracteres).</span>
+        </div>
+        <br>
+        <div>
+            <label for="Tipo">Tipo de Ave</label><br>
+            <select id="tipo-ave" name="tipo-ave">
+                <option value="">--Seleccione--</option>
+                <option value="rapaz">Rapaz</option>
+                <option value ="doméstica">Doméstica</option></option>
+                <span class="error" id="error-tipo">Debe Colocar un Tipo</span>  
+            </select>
+        </div>
+        <br>
+        <div>
+            <label for="fecha">Fecha del Avistamiento</label>
+            <input type="date" id="fecha-avistamiento" required>
+        </div>
+        <br>
+        <div>
+            <label for ="Ubicación">Ubicación del Avistamiento:</label><br>
+        </div>
+        <br>
+        <div>
+            <label for="region">Región:</label><br>
+            <select id="region" name="region">
+            <option value="">--Seleccione--</option>
+            </select>
+            <span class="error" id="error-region">Debe Seleccionar una Región</span>   
+        </div>
+        <br>
+        <div>
+            <label for="comuna">Comuna</label><br>
+            <select  id="comuna" name="comuna">
+            <option value="">--Seleccione--</option>
+            </select>
+            <span class="error" id="error-comuna">Debe Seleccionar una Comuna</span>
+        </div>
+        <br>
+            <label for="foto">Adjunte la foto</label><br>
+            <input type="file" id="fotoave" accept="image/*"/>
+            <span class="error" id="error-foto">Tiene que adjuntar una imagen</span>
+        <div>
+        <br>
+        <button type="submit">Agregar</button>
+        </div>
+    </form>
+    </div>
+ <script src="../js/agregar_avistamiento.js"></script>
+</body>
+</html>
