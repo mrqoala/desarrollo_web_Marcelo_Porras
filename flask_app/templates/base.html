@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<meta charset="UTF-8">
+<head>
+    <title> Ornitólogos de Chile - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href={{url_for('static', filename='css/base.css')}}>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-body">
+        <nav class="navbar">
+            <a class="titulo"> Unión Ornitológica de Chile</a>
+            <div class="grupo-medio">
+            <a class="navbar-page" href="{{url_for('agregar_avistamiento')}}">Agregar Avistamiento</a>
+            <a class="navbar-page" href="{{url_for('listado_avistamiento')}}">Listado de Avistamientos</a>
+            <a class="navbar-page" href="{{url_for('estadisticas')}}">Estadísticas</a>
+            </div>
+            <div class="grupo-derecho">
+            <a class="navbar-page" href="{{url_for('auth.login')}}"> Iniciar Sesión </a>
+            <a class="navbar-page" href="{{url_for('auth.register')}}">Registrarse</a>
+            </div>
+        </nav>
+    {% block content %}
+    
+    {% endblock %}
+    </div>
+</body>
+</html>

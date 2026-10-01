@@ -71,13 +71,13 @@ body{
 }
 .error{
     display: none;              /* oculto siempre */
-    color: rgb(201, 31, 31);
-    font-size: 13px;
+    font-size: 10px;
     font-family: "cantarell";
 }
 
 .error.visible{
-    display: block;            /* visible solo cuando además tiene la clase "visible" */
+    display: block;      
+     color: rgb(201, 31, 31);      /* visible solo cuando además tiene la clase "visible" */
 }
 label {
   padding-bottom: 1rem;

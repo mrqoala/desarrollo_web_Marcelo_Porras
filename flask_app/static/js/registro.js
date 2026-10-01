@@ -7,11 +7,16 @@ const validadorForm= (event) =>{
         const regexchile= /^(\+?56)?(\s?)(0?9)(\s?)[98765432]\d{7}$/;
         return regexchile.test(numero);
     }
+    const emailValido=(email) =>{
+        const patron = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
+        return patron.test(email)
+    }
     let nombre= document.getElementById("nombre");
     let region =document.getElementById("region");
     let comuna = document.getElementById("comuna");
     let numero = document.getElementById("telefono");
-    let isValid = validadorNombre(nombre.value) && seEligioOpcion(region.value) && seEligioOpcion(comuna.value)&& numeroVálido(numero.value);
+    let email= document.getElementById("correo")
+    let isValid = validadorNombre(nombre.value) && seEligioOpcion(region.value) && seEligioOpcion(comuna.value)&& numeroVálido(numero.value) && emailValido(email.value);
 
     let errorNombre=document.getElementById("error-nombre");
     errorNombre.className="error";
@@ -25,18 +30,24 @@ const validadorForm= (event) =>{
     let errorComuna = document.getElementById("error-comuna")
     errorComuna.className="error";
 
+    let errorCorreo=document.getElementById("error-correo")
+    errorCorreo.className="error";
+    
     if (!isValid){
         if (!validadorNombre(nombre.value)){
-            errorNombre.className="error visible";
+            errorNombre.className="error.visible";
         }
         if (!numeroVálido(numero.value)){
-            errorTelefono.className="error visible"
+            errorTelefono.className="error.visible"
         }
         if (!seEligioOpcion(region.value)){
-            errorRegion.className="error visible"
+            errorRegion.className="error.visible"
         }
         if (!seEligioOpcion(comuna.value)){
-            errorComuna.className="error visible"
+            errorComuna.className="error.visible"
+        }
+        if(!emailValido(email.value)){
+            errorCorreo.className="error.visible"
         }
     }
     else{
@@ -47,35 +58,6 @@ const validadorForm= (event) =>{
 let boton=document.querySelector("button[type=submit]");
 boton.addEventListener("click",validadorForm);
 
-async function cargarRegiones() {
-  const regiones = await fetch('/regiones.json');
-  const datos = await regiones.json();
-  const seleccion= document.getElementById("region")
-  const nombres= datos.regions.map(r=> r.name);
-  
-    for(const indice in nombres){
-        let nuevaRegion= document.createElement("option");
-        nuevaRegion.value=indice;
-        let texto=document.createTextNode(nombres[indice])
-        nuevaRegion.appendChild(texto);
-        seleccion.appendChild(nuevaRegion);
-  } 
-    let selRegion= document.getElementById("region");
-    selRegion.addEventListener("change",() =>{
-        const id=selRegion.value;
-        const comunaSelector=document.getElementById("comuna");
-        while (comunaSelector.firstChild){
-            comunaSelector.firstChild.remove();
-        }
-        const comunas = datos.regions[id].communes.map(r=>r.name);
-        for(comuna in comunas){
-            let nuevaComuna=document.createElement("option");
-            let text=document.createTextNode(comunas[comuna]);
-            nuevaComuna.appendChild(text);
-            comunaSelector.appendChild(nuevaComuna);
-    }
-});
-};
-cargarRegiones();
+
 
 
