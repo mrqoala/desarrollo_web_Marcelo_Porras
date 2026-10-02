@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `tarea2`.`voluntario` (
   `telefono` VARCHAR(15) NOT NULL,
   `fecha_registro` DATETIME NOT NULL,
   `comuna_id` INT NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_voluntario_comuna1_idx` (`comuna_id` ASC),
   CONSTRAINT `fk_voluntario_comuna1`

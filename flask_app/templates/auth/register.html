@@ -17,6 +17,11 @@
             </div>
             <br>
             <div>
+                <label for="contrasenna">Contraseña*</label><br>
+                <input class="grupo-input" type="password" id="contrasenna" name="contrasenna"  required>
+            </div>
+            <br>
+            <div>
                 <label for="telefono">Teléfono*</label><br>
                 <input class="grupo-input" type="number" id="telefono" name="telefono" placeholder="+56XXXXXXXXX" required>
                 <span class="error" id="error-telefono">Ingrese un número de Teléfono con formato válido</span>
@@ -44,6 +49,9 @@
             <br>
             <button class="botones" type="submit">Finalizar Registro</button>
         </form>
+        <br>
+    <div class="footer-form"> Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}">Ingresa</a>
+    </div>
     </div>
 <script src={{url_for('static',filename='js/registro.js')}}></script>    
 {%endblock%}

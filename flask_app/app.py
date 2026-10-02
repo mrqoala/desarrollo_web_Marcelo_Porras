@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session
-
-
+from database.db import engine
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -8,7 +7,6 @@ UPLOAD_FOLDER = 'static/uploads'
 app= Flask(__name__)
 app.secret_key = "s3cr3t_k3y"
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
-
 
 import auth
 app.register_blueprint(auth.bp)
