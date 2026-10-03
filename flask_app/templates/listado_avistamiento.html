@@ -1,43 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
-<meta charset="UTF-8">
 <head>
-    <title>Listado de Avistamiento|UOC</title>
-    <link rel="stylesheet" href={{url_for('static',filename='css/listado_avistamiento.css')}}>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Avistamientos | UOC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/listado_avistamiento.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="container-inicio">
-<a class="inicio" href="{{url_for('index')}}">Volver al Inicio </a> 
+<a class="inicio" href="{{ url_for('index') }}">Volver al Inicio </a>
 </div>
-<div class="container">  
+<div class="container">
 <h1>Listado de Avistamientos</h1>
+{% if items %}
+<div class="tabla-scroll">
 <table class="Avistamientos">
+  <thead>
   <tr>
     <th>Nombre Ave</th>
-    <th>Tipo</th>
-    <th>Usuario</th>
+    <th>Voluntario</th>
     <th>Fecha</th>
     <th>Ubicación del Avistamiento</th>
-    <th> Imagen</th>
+    <th>Archivos</th>
   </tr>
-  <tr>
-    <td>Lechuza </td>
-    <td>Rapaz</td>
-    <td> <a href="">marceloporras2</a></td>
-    <td>07 de Marzo 2022</td>
-    <td>Maipú, Región Metropolitana</td>
-    <td>lechuza.img</td>
+  </thead>
+  <tbody>
+  {% for av in items %}
+  <tr class="fila-clic" data-href="{{ url_for('detalle_avistamiento', avistamiento_id=av.id) }}">
+    <td><a href="{{ url_for('detalle_avistamiento', avistamiento_id=av.id) }}">{{ av.ave }}</a></td>
+    <td>{{ av.voluntario }}</td>
+    <td>{{ av.fecha_hora.strftime('%d/%m/%Y %H:%M') }}</td>
+    <td>{{ av.lugar }}</td>
+    <td>
+      {% if av.archivos and not av.archivos[0].es_video %}
+      <img class="miniatura" src="{{ url_for('static', filename=av.archivos[0].ruta) }}" alt="Foto del avistamiento de {{ av.ave }}">
+      {% endif %}
+      {{ av.archivos|length }} archivo(s)
+    </td>
   </tr>
-  <tr>
-    <td>Condor</td>
-    <td>Carroñero</td>
-    <td> <a href="">marceloporras2</a></td>
-    <td>03 de Abril 2026</td>
-    <td>Los Andes, Valparaiso</td>
-    <td>condor.img</td>
-  </tr>
+  {% endfor %}
+  </tbody>
 </table>
 </div>
+
+<nav class="paginacion" aria-label="Paginación">
+  {% if pagina > 1 %}
+  <a href="{{ url_for('listado_avistamiento', pagina=pagina - 1) }}">&laquo; Anterior</a>
+  {% else %}
+  <span class="inactivo">&laquo; Anterior</span>
+  {% endif %}
+  <span>Página {{ pagina }} de {{ paginas }} ({{ total }} avistamientos)</span>
+  {% if pagina < paginas %}
+  <a href="{{ url_for('listado_avistamiento', pagina=pagina + 1) }}">Siguiente &raquo;</a>
+  {% else %}
+  <span class="inactivo">Siguiente &raquo;</span>
+  {% endif %}
+</nav>
+{% else %}
+<p>Aún no hay avistamientos registrados.</p>
+{% endif %}
+</div>
+<script>
+document.querySelectorAll("tr[data-href]").forEach(function (fila) {
+    fila.addEventListener("click", function () { window.location.href = fila.dataset.href; });
+});
+</script>
 </body>
 </html>

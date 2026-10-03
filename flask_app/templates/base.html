@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-<meta charset="UTF-8">
 <head>
-    <title> Ornitólogos de Chile - {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href={{url_for('static', filename='css/base.css')}}>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ornitólogos de Chile - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="container-body">
         <nav class="navbar">
-            <a class="titulo"> Unión Ornitológica de Chile</a>
+            <a class="titulo" href="{{ url_for('index') }}">Unión Ornitológica de Chile</a>
             <div class="grupo-medio">
             <a class="navbar-page" href="{{url_for('agregar_avistamiento')}}">Agregar Avistamiento</a>
             <a class="navbar-page" href="{{url_for('listado_avistamiento')}}">Listado de Avistamientos</a>
             <a class="navbar-page" href="{{url_for('estadisticas')}}">Estadísticas</a>
             </div>
             <div class="grupo-derecho">
-            <a class="navbar-page" href="{{url_for('auth.login')}}"> Iniciar Sesión </a>
-            <a class="navbar-page" href="{{url_for('auth.register')}}">Registrarse</a>
+                {% if session.get('voluntario_id')%}
+                <span class="navbar-page">Hola, {{ session['voluntario_nombre'] }}</span>
+                <a class="navbar-page" href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+                {% else %}
+                <a class="navbar-page" href="{{ url_for('auth.login') }}">Iniciar Sesión</a>
+                <a class="navbar-page" href="{{ url_for('auth.register') }}">Registrarse</a>
+                {% endif %}
             </div>
         </nav>
+    {% for mensaje in get_flashed_messages() %}
+    <p class="mensaje">{{ mensaje }}</p>
+    {% endfor %}
     {% block content %}
-    
     {% endblock %}
     </div>
 </body>

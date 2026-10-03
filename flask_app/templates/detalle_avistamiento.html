@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ av.ave }} | Detalle de Avistamiento | UOC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/listado_avistamiento.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container-inicio">
+<a class="inicio" href="{{ url_for('listado_avistamiento') }}">Volver al Listado </a>
+</div>
+<div class="container">
+<h1>{{ av.ave }}</h1>
+<dl class="detalle">
+    <dt>Voluntario</dt>
+    <dd>{{ av.voluntario }}</dd>
+    <dt>Fecha y hora</dt>
+    <dd>{{ av.fecha_hora.strftime('%d/%m/%Y %H:%M') }}</dd>
+    <dt>Ubicación</dt>
+    <dd>{{ av.lugar }}</dd>
+    <dt>Descripción</dt>
+    <dd>{{ av.descripcion or "Sin descripción" }}</dd>
+</dl>
+
+<h2>Fotos y videos</h2>
+{% if av.archivos %}
+<div class="galeria">
+    {% for archivo in av.archivos %}
+    <figure>
+        {% if archivo.es_video %}
+        <video controls src="{{ url_for('static', filename=archivo.ruta) }}">
+            Tu navegador no puede reproducir este video.
+        </video>
+        {% else %}
+        <img src="{{ url_for('static', filename=archivo.ruta) }}" alt="Foto del avistamiento de {{ av.ave }}">
+        {% endif %}
+        <figcaption>{{ archivo.nombre }}</figcaption>
+    </figure>
+    {% endfor %}
+</div>
+{% else %}
+<p>Este avistamiento no tiene archivos adjuntos.</p>
+{% endif %}
+</div>
+</body>
+</html>

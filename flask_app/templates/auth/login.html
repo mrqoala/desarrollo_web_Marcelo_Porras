@@ -1,20 +1,21 @@
-{% extends 'form.html'%}
-    
-{%block content %}
-<div class="container">
-    <h1> Iniciar Sesión </h1>
-    <div>
-        <label for="correo">Correo Electrónico:</label><br>
-        <input class="grupo-input" type="email" id="correo" name="correo" placeholder="Ingrese su Correo Electrónico" required>
-    </div>
-    <br>
-    <div>
-        <label for="password">Contraseña:</label><br>
-        <input class="grupo-input" type="password" id="password" name="password"required>
-    </div>
-    <br>
-     <button class="botones" type="submit">Iniciar Sesión</button>
-    <
+{% extends 'form.html' %}
 
+{% block content %}
+<div class="container">
+    <h1>Iniciar Sesión</h1>
+    <form class="formulario" action="{{ url_for('auth.login') }}" method="post">
+        {% if error %}<p class="error visible">{{ error }}</p>{% endif %}
+        <div>
+            <label for="correo">Correo Electrónico*</label><br>
+            <input class="grupo-input" type="email" id="correo" name="correo" required>
+        </div>
+        <br>
+        <div>
+            <label for="password">Contraseña*</label><br>
+            <input class="grupo-input" type="password" id="password" name="password" required>
+        </div>
+        <br>
+        <button class="botones" type="submit">Iniciar Sesión</button>
+    </form>
 </div>
-{%endblock%}
+{% endblock %}

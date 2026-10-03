@@ -1,6 +1,5 @@
 
 const validadorForm= (event) =>{
-    event.preventDefault();
     const validadorNombre = (nombre)=> nombre && nombre.length>3;
     const seEligioOpcion = (opcion) => opcion !=="";
     const numeroVálido =(numero) =>{
@@ -34,30 +33,37 @@ const validadorForm= (event) =>{
     errorCorreo.className="error";
     
     if (!isValid){
+        event.preventDefault();
         if (!validadorNombre(nombre.value)){
-            errorNombre.className="error.visible";
+            errorNombre.className="error visible";
         }
         if (!numeroVálido(numero.value)){
-            errorTelefono.className="error.visible"
+            errorTelefono.className="error visible"
         }
         if (!seEligioOpcion(region.value)){
-            errorRegion.className="error.visible"
+            errorRegion.className="error visible"
         }
         if (!seEligioOpcion(comuna.value)){
-            errorComuna.className="error.visible"
+            errorComuna.className="error visible"
         }
         if(!emailValido(email.value)){
-            errorCorreo.className="error.visible"
+            errorCorreo.className="error visible"
         }
-    }
-    else{
-        window.location.href="index.html";
-        window.alert("Registro Exitoso")
     }
 }
 let boton=document.querySelector("button[type=submit]");
 boton.addEventListener("click",validadorForm);
 
 
+const selectRegion = document.getElementById("region");
+const selectComuna = document.getElementById("comuna");
 
+selectRegion.addEventListener("change", () => {
+    const comunasDeLaRegion = COMUNAS.filter(c => c.region_id == selectRegion.value);
+
+    selectComuna.innerHTML = '<option value="">Seleccione</option>';
+    for (const c of comunasDeLaRegion) {
+        selectComuna.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
+    }
+});
 

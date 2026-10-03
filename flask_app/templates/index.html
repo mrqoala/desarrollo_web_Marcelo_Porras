@@ -1,6 +1,38 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block title %}Inicio{% endblock %}
 
-<div class="container-maincontent"></div>
+{% block content %}
+<main class="portada">
+    <h1>Bienvenido a la Unión Ornitológica de Chile</h1>
+    <p class="bienvenida">Registra y consulta avistamientos de aves de todo el país.</p>
+
+    <nav class="menu-portada" aria-label="Menú principal">
+        <a href="{{ url_for('auth.register') }}">Registrar voluntario</a>
+        <a href="{{ url_for('agregar_avistamiento') }}">Informar avistamiento</a>
+        <a href="{{ url_for('estadisticas') }}">Estadísticas</a>
+    </nav>
+
+    <section>
+        <h2>Últimos avistamientos</h2>
+        {% if ultimos %}
+        <div class="ultimos">
+            {% for av in ultimos %}
+            <article class="tarjeta">
+                {% if av.archivos and not av.archivos[0].es_video %}
+                <img src="{{ url_for('static', filename=av.archivos[0].ruta) }}" alt="Foto del avistamiento de {{ av.ave }}">
+                {% endif %}
+                <h3><a href="{{ url_for('detalle_avistamiento', avistamiento_id=av.id) }}">{{ av.ave }}</a></h3>
+                <p>{{ av.fecha_hora.strftime('%d/%m/%Y %H:%M') }}</p>
+                <p>{{ av.lugar }}</p>
+                <p>Registrado por {{ av.voluntario }}</p>
+            </article>
+            {% endfor %}
+        </div>
+        <p><a href="{{ url_for('listado_avistamiento') }}">Ver todos los avistamientos</a></p>
+        {% else %}
+        <p>Aún no hay avistamientos registrados.</p>
+        {% endif %}
+    </section>
+</main>
 {% endblock %}

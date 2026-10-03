@@ -35,6 +35,16 @@ const layoutuavesmasvistas = {
   title:{ text:" Aves más Avistadas"}
   };
 
+const datavoluntarios = [{
+  values: VOLUNTARIOS.map(v => v.cantidad),
+  labels: VOLUNTARIOS.map(v => v.nombre),
+  type: 'pie'}]
+const layoutvoluntarios = {
+  height: 400,
+  width: 600,
+  title:{ text:"Avistamientos por Voluntario"}
+  };
+
 const containergrafico = document.getElementById("container-grafico");
 
 function mostrarGrafico(data, layout) {
@@ -56,5 +66,11 @@ let botonavesmasvisitadas=document.getElementById("masvistas")
 botonavesmasvisitadas.addEventListener("click",(event)=>{
   event.preventDefault();
   mostrarGrafico(datamasvistas, layoutuavesmasvistas);
+})
+
+let botonvoluntarios=document.getElementById("voluntarios");
+botonvoluntarios.addEventListener("click",(event)=>{
+  event.preventDefault();
+  mostrarGrafico(datavoluntarios, layoutvoluntarios);
 })
 mostrarGrafico(datatipos, layouttipos);

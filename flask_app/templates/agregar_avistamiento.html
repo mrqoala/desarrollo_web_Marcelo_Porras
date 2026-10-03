@@ -2,74 +2,89 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Agregar Avistamiento|UOC</title>
-    <link rel="stylesheet" href={{url_for('static',filename='css/form.css')}}>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Avistamiento | UOC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container-inicio">
-    <a class="inicio" href="{{url_for('index')}}">Volver al Inicio </a>
+    <a class="inicio" href="{{ url_for('index') }}">Volver al Inicio </a>
     </div>
+    {% for mensaje in get_flashed_messages() %}
+    <p class="mensaje">{{ mensaje }}</p>
+    {% endfor %}
     <div class="container">
     <h1>Agregar Avistamiento</h1>
-    <form class="formulario" id="agregar_avistamiento" action="#" method="post">
+    <form class="formulario" id="agregar_avistamiento" action="{{ url_for('agregar_avistamiento') }}"
+          method="post" enctype="multipart/form-data" novalidate>
+        {% if errores %}
+        <ul class="error visible">
+            {% for e in errores.values() %}<li>{{ e }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+
+        <p>Voluntario: <strong>{{ session['voluntario_nombre'] }}</strong></p>
+
         <div>
-            <label for="nombre-ave">Nombre del Ave*</label>
-            <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Gorrión,Tórtola,etc..." required/>
-            <span class="error" id="error-nombre">Debe ingresar un nombre (mínimo 3 caracteres).</span>
-        </div>
-        <br>
-        <div>
-            <label for="tipo-ave">Tipo de Ave*</label><br>
-            <select id="tipo-ave" name="tipo-ave">
+            <label for="ave">Ave*</label><br>
+            <select id="ave" name="ave" required>
                 <option value="">--Seleccione--</option>
-                <option value="rapaz">Rapaz</option>
-                <option value ="doméstica">Doméstica</option></option>
-                <span class="error" id="error-tipo">Debe Colocar un Tipo</span>  
+                {% for a in aves %}
+                <option value="{{ a.id }}">{{ a.nombre }}</option>
+                {% endfor %}
             </select>
+            <span class="error" id="error-ave">Debe seleccionar un ave de la lista.</span>
         </div>
         <br>
         <div>
-            <label for="fecha-avistamiento">Fecha del Avistamiento*</label>
-            <input type="date" id="fecha-avistamiento" required>
+            <label for="fecha">Fecha del Avistamiento*</label>
+            <input type="date" id="fecha" name="fecha" value="{{ valores.get('fecha', '') }}" required>
+            <span class="error" id="error-fecha">Debe ingresar una fecha válida (no futura).</span>
         </div>
         <br>
         <div>
-            <label for="hora-avistamiento">Hora del Avistamiento*</label>
-            <input type="time" id="hora-avistamiento" required>
-        </div>
-        <br>
-        <div>
-            <label for ="Ubicación">Ubicación del Avistamiento</label><br>
+            <label for="hora">Hora del Avistamiento*</label>
+            <input type="time" id="hora" name="hora" value="{{ valores.get('hora', '') }}" required>
+            <span class="error" id="error-hora">Debe ingresar una hora válida.</span>
         </div>
         <br>
         <div>
             <label for="region">Región*</label><br>
-            <select id="region" name="region">
-            <option value="">--Seleccione--</option>
+            <select id="region" name="region" required>
+                <option value="">--Seleccione--</option>
+                {% for r in regiones %}
+                <option value="{{ r.id }}">{{ r.nombre }}</option>
+                {% endfor %}
             </select>
-            <span class="error" id="error-region">Debe Seleccionar una Región</span>   
+            <span class="error" id="error-region">Debe seleccionar una región.</span>
         </div>
         <br>
         <div>
-            <label for="comuna">Comuna</label><br>
-            <select  id="comuna" name="comuna">
-            <option value="">--Seleccione--</option>
+            <label for="comuna">Comuna*</label><br>
+            <select id="comuna" name="comuna" required>
+                <option value="">--Seleccione--</option>
             </select>
-            <span class="error" id="error-comuna">Debe Seleccionar una Comuna</span>
+            <span class="error" id="error-comuna">Debe seleccionar una comuna.</span>
         </div>
         <br>
-            <label for="fotoave">Adjunte una imagen*</label><br>
-            <input type="file" id="fotoave" accept="image/*"/>
-            <span class="error" id="error-foto">Tiene que adjuntar una imagen</span>
         <div>
+            <label for="descripcion">Descripción</label><br>
+            <textarea id="descripcion" name="descripcion" rows="3" maxlength="500">{{ valores.get('descripcion', '') }}</textarea>
+        </div>
+        <br>
+        <div>
+            <label for="archivos">Fotos o videos* (de 1 a 5 archivos)</label><br>
+            <input type="file" id="archivos" name="archivos" accept="image/*,video/mp4,video/webm" multiple required>
+            <span class="error" id="error-archivos">Debe adjuntar entre 1 y 5 archivos.</span>
+        </div>
         <br>
         <button type="submit">Agregar</button>
-        </div>
     </form>
     </div>
- <script src="../js/agregar_avistamiento.js"></script>
+    <script>const COMUNAS = {{ comunas|tojson }};</script>
+    <script src="{{ url_for('static', filename='js/agregar_avistamiento.js') }}"></script>
 </body>
 </html>

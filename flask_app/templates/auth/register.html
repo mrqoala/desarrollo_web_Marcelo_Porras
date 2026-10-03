@@ -3,16 +3,21 @@
 {% block content%}
 <div class="container">
         <h1>Registro</h1>
-        <form class="formulario"  id=form-registro action="#" method="post">
+        <form class="formulario"  id=form-registro action="{{url_for('auth.register')}}" method="post">
+            {% if errores %}
+            <ul class="error visible">
+                {% for e in errores.values() %}<li>{{ e }}</li>{% endfor %}
+            </ul>
+            {% endif %}
             <div>
                 <label for="nombre">Nombre*</label><br>
-                <input class="grupo-input" type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
+                <input class="grupo-input" type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" value="{{ valores.get('nombre', '') }}" required>
                 <span class="error" id="error-nombre">Debe ingresar un nombre (mínimo 3 caracteres).</span>
             </div>
             <br>
             <div>
                 <label for="correo">Correo Electrónico*</label><br>
-                <input class="grupo-input" type="email" id="correo" name="correo" placeholder="ejemplo@email.com" required>
+                <input class="grupo-input" type="email" id="correo" name="correo" placeholder="ejemplo@email.com" value="{{ valores.get('correo', '') }}" required>
                 <span class="error" id="error-correo">Ingrese un Correo Electrónico con formato válido</span>
             </div>
             <br>
@@ -23,7 +28,7 @@
             <br>
             <div>
                 <label for="telefono">Teléfono*</label><br>
-                <input class="grupo-input" type="number" id="telefono" name="telefono" placeholder="+56XXXXXXXXX" required>
+                <input class="grupo-input" type="tel" id="telefono" name="telefono" placeholder="+56XXXXXXXXX" value="{{ valores.get('telefono', '') }}" required>
                 <span class="error" id="error-telefono">Ingrese un número de Teléfono con formato válido</span>
             </div>
             <br>
@@ -34,7 +39,10 @@
             <div>
                 <label for="region">Región*</label><br>
                 <select id="region" name="region">
-                <option value="">Seleccione</option>
+                    <option value="">Seleccione</option>
+                    {% for r in regiones %}
+                    <option value="{{r.id}}">{{r.nombre}}</option>
+                    {% endfor %}
                 </select>
                 <span class="error" id="error-region">Debe Seleccionar una Región</span>    
             </div>
@@ -53,5 +61,6 @@
     <div class="footer-form"> Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}">Ingresa</a>
     </div>
     </div>
+<script> const COMUNAS ={{ comunas|tojson }};</script>
 <script src={{url_for('static',filename='js/registro.js')}}></script>    
 {%endblock%}
