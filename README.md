@@ -16,4 +16,4 @@ Modifiqué el tarea2.sql agregandole el varchar de contraseña para poder realiz
 
 ## Diseño esperado
 
-
+![Diseño esperado](https://github.com/mrqoala/desarrollo_web_Marcelo_Porras/blob/Tarea-2/dise%C3%B1oesperado.png)
