@@ -55,5 +55,16 @@ class Voluntario(Base):
     email=Column(String(80),nullable=False)
     telefono=Column(String(15),nullable=False)
     fecha_registro=Column(DateTime,nullable=False)
-    comuna_id=Column(Integer,ForeignKey('comuna.id'),nullable=False)
+    comuna_id=Column(Integer, ForeignKey('comuna.id'),nullable=False)
     password= Column(String(255),nullable=False)
+
+
+class Comentario(Base):
+    __tablename__ = 'comentario'
+
+    id = Column(Integer,primary_key=True,autoincrement=True)
+    nombre=Column(String(80),nullable=False)
+    texto=Column(String(300),nullable=False)
+    fecha=Column(DateTime,nullable=False)
+    avistamiento_id=Column(Integer, ForeignKey("avistamiento.id") ,nullable=False)
+    avistamiento= relationship("Avistamiento")
