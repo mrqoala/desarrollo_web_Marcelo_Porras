@@ -168,3 +168,145 @@ h2{
     color: #55503f;
     word-break: break-all;
 }
+/* ---------- Comentarios ---------- */
+.caja-comentarios{
+    margin-top: 48px;
+    padding-top: 8px;
+    border-top: 2px solid #1c3a1f;
+}
+
+.comentarios{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.contenedor-comentario{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 20px;
+    background-color: #fbf9f3;
+    border: 1px solid #c9c1a6;
+    border-left: 4px solid #1c3a1f;
+}
+
+.contenedornombre-fecha{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+}
+.contenedornombre-fecha p{
+    margin: 0;
+}
+
+.comentario-nombre{
+    font-family: "Lora", Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1c3a1f;
+}
+.comentario-fecha{
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7d7761;
+}
+.comentario-texto{
+    margin: 0;
+    font-size: 15px;
+    color: #26261f;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.sin-comentarios{
+    margin: 0;
+    padding: 16px 20px;
+    font-style: italic;
+    color: #55503f;
+    border: 1px dashed #b3ab91;
+}
+
+.sin-comentarios a{
+    font-style: normal;
+    font-weight: 600;
+    color: #1c3a1f;
+}
+
+/* ---------- Formulario ---------- */
+.form-comentario{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background-color: #d3ccb4;
+}
+.form-comentario-label{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8a4a14;
+}
+.form-comentario input[type="text"],
+.form-comentario textarea{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 15px;
+    color: #26261f;
+    background-color: #fbf9f3;
+    border: 2px solid #b3ab91;
+}
+.form-comentario textarea{
+    min-height: 90px;
+    resize: vertical;
+}
+.form-comentario input[type="text"]:focus,
+.form-comentario textarea:focus{
+    outline: none;
+    border-color: #1c3a1f;
+}
+
+.error-campo{
+    margin: -4px 0 4px 0;
+    min-height: 1em;
+    font-size: 13px;
+    color: #a3261a;
+}
+
+.boton-comentar{
+    align-self: flex-end;
+    padding: 10px 22px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f4f0e6;
+    background-color: #1c3a1f;
+    border: 2px solid #1c3a1f;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+.boton-comentar:hover{
+    background-color: transparent;
+    color: #1c3a1f;
+}
+.boton-comentar:focus-visible{
+    outline: 2px solid #8a4a14;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px){
+    .boton-comentar{
+        align-self: stretch;
+    }
+}

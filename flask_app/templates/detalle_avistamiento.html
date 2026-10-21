@@ -45,11 +45,30 @@
 {% else %}
 <p>Este avistamiento no tiene archivos adjuntos.</p>
 {% endif %}
-<div class="caja-comentarios">
-    <h3>Comentarios</h3>
-    <input>
-    <button type="submit">Agregar Comentario</button>
+<section class="caja-comentarios">
+    <h2>Comentarios</h2>
+    <div class="comentarios">
+    </div>
+
+    {% if session.voluntario_id %}
+    <form class="form-comentario" id="form-comentario" novalidate>
+        <p class="form-comentario-label">Comentando como {{ session.voluntario_nombre }}</p>
+
+        <label class="form-comentario-label" for="comentario">Comentario</label>
+        <textarea id="comentario" name="comentario" rows="3" cols="40" minlength="5" maxlength="200" required></textarea>
+        <p class="error-campo" id="error-texto"></p>
+
+        <button class="boton-comentar" type="submit">Agregar comentario</button>
+    </form>
+    {% else %}
+    <p class="sin-comentarios"><a href="{{ url_for('auth.login') }}">Inicia sesión</a> para agregar un comentario.</p>
+    {% endif %}
+</section>
 </div>
-</div>
+<script>
+    const comentarios = {{ url_for('get_comentarios', avistamiento_id=av.id) | tojson }};
+    const urlAgregarComentario = {{ url_for('agregar_comentario', avistamiento_id=av.id) | tojson }};
+</script>
+<script src="{{url_for('static',filename='js/detalle_avistamiento.js')}}"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import create_engine, func,select,text
 from sqlalchemy.orm import sessionmaker
-from database.models import Base, Ave, Avistamiento , Voluntario, Comuna, Region, Registro
+from database.models import Base, Ave, Avistamiento , Voluntario, Comuna, Region, Registro,Comentario
 from werkzeug.security import generate_password_hash,check_password_hash
 
 DB_NAME ="tarea2"
@@ -163,3 +163,24 @@ def get_voluntarios_comuna():
     sql= text("SELECT comuna.nombre, COUNT(*) FROM comuna,voluntario WHERE comuna.id=voluntario.comuna_id GROUP BY comuna.nombre")
     resultado=session.execute(sql).fetchall()
     return[{"comuna":comuna,"cantidad":cantidad} for comuna,cantidad in resultado]
+
+def addComentario(nombre,texto,avistamiento_id):
+    with SessionLocal() as session:
+        comentario=Comentario(
+            nombre=nombre,
+            texto=texto,
+            fecha=datetime.now(),
+            avistamiento_id=avistamiento_id
+        )
+        session.add(comentario)
+        session.commit()
+    return True,None
+
+
+def getComentariosAvistamiento(avistamiento_id):
+    session=SessionLocal()
+    sql= text("SELECT nombre,texto,DATE(fecha) FROM comentario WHERE avistamiento_id = :x ORDER BY fecha DESC")
+    comentarios=session.execute(sql,{"x":avistamiento_id}).fetchall()
+    session.close()
+    return [{"nombre":nombre,"comentario":texto,"fecha":fecha.strftime("%d-%m-%Y")} for nombre,texto,fecha in comentarios]
+

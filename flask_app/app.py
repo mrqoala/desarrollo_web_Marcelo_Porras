@@ -4,7 +4,7 @@ from flask import Flask, request, render_template, redirect, url_for, session, f
 from werkzeug.utils import secure_filename
 
 from database import db
-from utils.validation import validar_avistamiento
+from utils.validation import validar_avistamiento,validarComentario
 
 AVISTAMIENTOS_POR_PAGINA = 5
 UPLOAD_FOLDER = "static/uploads"
@@ -83,10 +83,44 @@ def listado_avistamiento():
 
 @app.route("/avistamiento/<int:avistamiento_id>")
 def detalle_avistamiento(avistamiento_id):
-    avistamiento= db.get_avistamiento(avistamiento_id)
+    avistamiento = db.get_avistamiento(avistamiento_id)
     if avistamiento is None:
         abort(404)
-    return render_template("detalle_avistamiento.html",av=avistamiento)
+    return render_template("detalle_avistamiento.html", av=avistamiento)
+
+
+@app.route("/avistamiento/<int:avistamiento_id>/comentario", methods=["POST"])
+def agregar_comentario(avistamiento_id):
+    if "voluntario_id" not in session:
+        return jsonify({"status": "error", "errores": {"general": "Debes iniciar sesión para comentar."}}), 401
+
+    if db.get_avistamiento(avistamiento_id) is None:
+        return jsonify({"status": "error", "errores": {"general": "El avistamiento no existe."}}), 404
+
+    nombre = session["voluntario_nombre"]
+    texto = request.form.get("comentario", "").strip()
+
+    errores = {}
+    errores_texto = validarComentario(texto)
+    if errores_texto:
+        errores["texto"] = errores_texto["largo"]
+
+    if errores:
+        return jsonify({"status": "error", "errores": errores}), 400
+
+    db.addComentario(nombre, texto, avistamiento_id)
+    return jsonify({"status": "ok"}), 201
+
+@app.route("/get-comentarios-avistamiento/<int:avistamiento_id>",methods=["GET"])
+@app.route("/get-comentarios-avistamientos/",methods=["GET"])
+def get_comentarios(avistamiento_id=None):
+    if avistamiento_id == None:
+        return jsonify({"status":"error","data":[]}),400
+    else:
+        comentarios=db.getComentariosAvistamiento(avistamiento_id)
+        return jsonify({"status":"ok","data":comentarios})
+
+
 
 
 @app.route("/estadisticas")

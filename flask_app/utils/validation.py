@@ -48,3 +48,10 @@ def validar_avistamiento(ave_id, fecha, hora, comuna_id, descripcion, archivos, 
                 errores["archivos"]="Solo se permiten imágenes (jpg, png, gif, webp) o videos (mp4, webm)."
 
     return errores,fecha_hora
+
+
+def validarComentario(comentario):
+    errores={}
+    if 5>len(comentario) or len(comentario)>200:
+        errores["largo"]="Entrega un comentario de largo valido (5-200 caracteres)"
+    return errores
