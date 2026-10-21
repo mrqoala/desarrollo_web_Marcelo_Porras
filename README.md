@@ -1,17 +1,12 @@
-# Tarea 2
+# Tarea 3
 
 
-## Funcionalidades 
-El sitio web de la Unión Ornitológica de Chile tiene las siguientes funcionalidades:
+## Funcionalidades añadidas
+El sitio web de la Unión Ornitológica de Chile se le añadieron las siguientes funcionalidades:
 
--Registro de usuario con contraseña ( autentificación con werkzeug)
--Se pueden registrar avistamientos de aves, en su respectivo formulario (Se necesita iniciar sesión, o por defecto registrarse si es que no tienes cuenta)
+-Ahora en la sección de estadísticas, se presentan 3 gráficos a tiempo real, realizados con highchart.js y peticiones asíncronas
 
--Ver los últimos avistamientos en el inicio, y ver la lista de todos los avistamientos, con la posibilidad de ver en mayor detalle cada uno de las "tarjetas" de avistamiento.
-
-## Archivos
-Modifiqué el tarea2.sql agregandole el varchar de contraseña para poder realizar el sistema de login.
-
+-A la hora de ver con más detalle los avistamientos, ahora puedes dejar un comentario (debes estar registrado e iniciar sesión para poder comentar,pero no para leer los comentarios)
 
 
 ## Diseño esperado
