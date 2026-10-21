@@ -1,6 +1,6 @@
 import uuid
 
-from flask import Flask, request, render_template, redirect, url_for, session, flash, abort
+from flask import Flask, request, render_template, redirect, url_for, session, flash, abort,jsonify
 from werkzeug.utils import secure_filename
 
 from database import db
@@ -93,3 +93,25 @@ def detalle_avistamiento(avistamiento_id):
 def estadisticas():
     voluntarios= db.get_avistamientos_por_voluntario()
     return render_template("estadisticas.html",voluntarios=voluntarios)
+
+
+@app.route("/get-data/<string:title_substring>",methods=["GET"])
+@app.route ("/get-data/",methods=["GET"])
+def get_data(title_substring=None):
+    match title_substring:
+
+        case "avistamientos-dia":
+            avistamientosDia=db.get_avistamiento_por_dias()
+            return jsonify({"status": "ok", "data": avistamientosDia})
+    
+        case "avistamientos-tipo":
+            avistamientosTipo=db.get_avistamientos_tipo()
+            return jsonify({"status": "ok","data":avistamientosTipo})
+            
+        case "voluntarios-comuna":
+            voluntarios_comuna=db.get_voluntarios_comuna()
+            return jsonify({"status":"ok","data":voluntarios_comuna})
+
+        case None:
+            return jsonify({"status": "error", "data":[]}),400
+    

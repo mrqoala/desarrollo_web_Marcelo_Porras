@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.plot.ly/plotly-4.0.0.min.js" charset="utf-8"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <title>Estadísticas|UOC</title>
     <link rel="stylesheet" href={{url_for('static',filename="css/estadisticas.css")}}>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
+    
 
 </head>
 <body> 
@@ -17,16 +18,21 @@
 </div>
 <h1 class="titulo">Estadísticas</h1><br>
 <div class="container-botones">
+<button class="boton" id="dias"> Avistamientos por Día</button>
 <button class="boton" id="tipos-aves"> Tipos de Aves</button> 
-<button class="boton" id="ubicaciones"> Ubicaciones Avistamientos</button>
-<button class="boton" id="masvistas"> Aves más Avistadas</button>
 <button class="boton" id="voluntarios"> Voluntarios</button>
 </div>
 <br>
 <div class="torta-mostrar" id="container-grafico">
 </div>
-<script>const VOLUNTARIOS = {{ voluntarios|tojson }};</script>
-<script src="{{ url_for('static', filename='js/estadisticas.js') }}">
+<script> 
+
+    const VOLUNTARIOS = {{voluntarios|tojson }};
+    const dias = {{ url_for('get_data', title_substring="avistamientos-dia")| tojson}};
+    const avesmasvistas = {{ url_for('get_data',title_substring='avistamientos-tipo')| tojson}};
+    const voluntarioscomunas = {{url_for('get_data',title_substring="voluntarios-comuna")|tojson}};
+
 </script>
+<script src="{{ url_for('static', filename='js/estadisticas.js') }}"> </script>
 </body>
 </html>

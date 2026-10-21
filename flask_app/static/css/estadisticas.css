@@ -52,17 +52,27 @@ body{
     text-transform: uppercase;
     cursor: pointer;
 }
-.boton:hover{
+.boton:hover,
+.boton.activo{
     background-color: #1c3a1f;
     color: #f4f0e6;
 }
 
 .torta-mostrar{
-    max-width: 620px;
+    max-width: 760px;
+    min-height: 420px;
     margin: 0 40px 56px 40px;
-    padding: 12px;
-    background-color: #ffffff;
+    padding: 8px;
+    background-color: #fbf9f3;
     border: 1px solid #b3ab91;
+    border-top: 4px solid #1c3a1f;
+    box-shadow: 0 6px 18px rgba(28, 58, 31, 0.08);
+}
+
+@media (max-width: 600px){
+    .torta-mostrar{
+        margin: 0 16px 40px 16px;
+    }
 }
 
 

@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine, func,select,text
 from sqlalchemy.orm import sessionmaker
 from database.models import Base, Ave, Avistamiento , Voluntario, Comuna, Region, Registro
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -144,3 +144,22 @@ def get_avistamiento(avistamiento_id):
     datos= datos_avistamiento(session,avistamiento)
     session.close()
     return datos
+
+def get_avistamiento_por_dias():
+    session=SessionLocal()
+    sql = text("SELECT DATE(fecha_hora) AS dia, COUNT(*) AS cantidad FROM avistamiento GROUP BY DATE(fecha_hora) ORDER BY dia ASC")
+    resultado = session.execute(sql).fetchall()
+    session.close()
+    return [{"dia": dia.strftime("%d-%m-%Y"), "cantidad": cantidad} for dia, cantidad in resultado]
+
+def get_avistamientos_tipo():
+    session= SessionLocal()
+    sql=text("SELECT nombre,COUNT(*) FROM avistamiento,ave WHERE ave_id=ave.id GROUP BY nombre")
+    resultado= session.execute(sql).fetchall()
+    return[{"tipo":tipo,"cantidad":cantidad} for tipo,cantidad in resultado]
+
+def get_voluntarios_comuna():
+    session=SessionLocal()
+    sql= text("SELECT comuna.nombre, COUNT(*) FROM comuna,voluntario WHERE comuna.id=voluntario.comuna_id GROUP BY comuna.nombre")
+    resultado=session.execute(sql).fetchall()
+    return[{"comuna":comuna,"cantidad":cantidad} for comuna,cantidad in resultado]
