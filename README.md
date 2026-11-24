@@ -22,9 +22,3 @@ Usé la tabla nota que venía en tabla-nota.sql, no la modifiqué. En applicatio
 
 El CSS lo hice parecido al de la tarea 3.
 
-## Cómo correrlo
-Hay que tener MySQL con la base tarea2 (usuario cc5002, password programacionweb) y Java 17 o más. Dentro de la carpeta cuatro:
-
-./mvnw spring-boot:run
-
-y se abre localhost:8080
