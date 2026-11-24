@@ -1,38 +1,42 @@
 package tarea.cuatro.services;
 
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.security.MessageDigest;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import tarea.cuatro.models.Models;
-import tarea.cuatro.models.ModelsRepository;
-
+import tarea.cuatro.models.Avistamiento;
+import tarea.cuatro.models.AvistamientoRepository;
+import tarea.cuatro.models.Nota;
+import tarea.cuatro.models.NotaRepository;
 
 @Service
 public class AppService {
+    private final AvistamientoRepository avistamientoRepository;
+    private final NotaRepository notaRepository;
 
-    private final String pathStatic;
-    private final ModelsRepository modelsRepository;
+    public AppService(AvistamientoRepository avistamientoRepository, NotaRepository notaRepository) {
+        this.avistamientoRepository = avistamientoRepository;
+        this.notaRepository = notaRepository;
+    }
 
-    public AppService(ModelsRepository modelsRepository) throws IOException {
-        this.modelsRepository= modelsRepository;
-        Path staticDir = Paths.get(ResourceUtils.getFile("classpath:static").getAbsolutePath());
-        this.pathStatic= staticDir.toString();
-        System.out.println("Static path resolved to: " + this.pathStatic);
+    public Double handlePostNota(String avistamientoId, String nota) {
+        int id;
+        int valor;
+        try {
+            id = Integer.parseInt(avistamientoId.trim());
+            valor = Integer.parseInt(nota.trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("La nota debe ser un número entero.");
+        }
+
+        if (valor < 1 || valor > 7) {
+            throw new IllegalArgumentException("La nota debe estar entre 1 y 7.");
+        }
+
+        Avistamiento avistamiento = avistamientoRepository.findById(id).orElse(null);
+        if (avistamiento == null) {
+            throw new IllegalArgumentException("El avistamiento no existe.");
+        }
+
+        notaRepository.save(new Nota(avistamiento, valor));
+        return notaRepository.promedio(id);
+    }
 }

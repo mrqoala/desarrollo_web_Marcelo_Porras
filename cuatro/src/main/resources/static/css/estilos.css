@@ -1,0 +1,116 @@
+body{
+    margin: 0;
+    min-height: 100vh;
+    background-color: #dfd9c6;
+    color: #26261f;
+    font-family: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.navbar{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background-color: #1c4220;
+}
+.titulo{
+    font-family: "Lora", Georgia, serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #f4f0e6;
+    text-decoration: none;
+}
+.navbar-page{
+    color: #e8e3d0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.container{
+    max-width: 1080px;
+    margin: 32px auto 72px auto;
+    padding: 0 40px;
+}
+h1{
+    margin: 0 0 32px 0;
+    padding-top: 18px;
+    border-top: 4px solid #1c3a1f;
+    font-family: "Lora", Georgia, serif;
+    font-size: 40px;
+    line-height: 1.1;
+    color: #1c3a1f;
+}
+
+label{
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #55503f;
+}
+input[type="text"]{
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 16px;
+    color: #26261f;
+    background-color: #f4f0e6;
+    border: 1px solid #b3ab91;
+}
+input[type="text"]:focus{
+    outline: 2px solid #1c3a1f;
+}
+
+#search-message{
+    margin: 20px 0 0 0;
+    color: #8a4a14;
+    font-weight: 600;
+}
+
+#search-list{
+    list-style: none;
+    margin: 24px 0 0 0;
+    padding: 0;
+}
+#search-list li{
+    padding: 16px 0;
+    border-bottom: 1px solid #b3ab91;
+}
+#search-list li:first-child{
+    border-top: 2px solid #1c3a1f;
+}
+mark{
+    background-color: #d9b45a;
+    color: #26261f;
+}
+
+button{
+    margin-left: 8px;
+    padding: 4px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #f4f0e6;
+    background-color: #1c3a1f;
+    border: none;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #1c4220;
+}
+select{
+    margin-left: 8px;
+    padding: 3px 6px;
+    font-family: inherit;
+    font-size: 14px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de avistamientos | UOC</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;family=Lora:wght@700&amp;display=swap"
+      rel="stylesheet"
+   >
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <div th:replace="~{fragments/nav :: navbar}"></div>
+
+    <div class="container">
+      <h1>Buscador de avistamientos</h1>
+      <form onsubmit="return false;">
+        <label for="search-input">Ave, voluntario o comuna</label>
+        <input type="text" id="search-input" autocomplete="off">
+      </form>
+      <p id="search-message"></p>
+      <ul id="search-list"></ul>
+    </div>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/buscar.js}"></script>
+  </body>
+</html>
