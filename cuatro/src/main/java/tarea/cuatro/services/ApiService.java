@@ -1,61 +1,56 @@
 package tarea.cuatro.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
 import tarea.cuatro.models.Avistamiento;
 import tarea.cuatro.models.AvistamientoRepository;
+import tarea.cuatro.models.Nota;
 import tarea.cuatro.models.NotaRepository;
 
 @Service
 public class ApiService {
-    private final AvistamientoRepository avistamientoRepository;
-    private final NotaRepository notaRepository;
 
-    public ApiService(AvistamientoRepository avistamientoRepository, NotaRepository notaRepository) {
-        this.avistamientoRepository = avistamientoRepository;
-        this.notaRepository = notaRepository;
+    public record Resultado(Integer id, String voluntario, String dia, String ave, String comuna, Double nota) {}
+
+    private final AvistamientoRepository avistamientos;
+    private final NotaRepository notas;
+
+    public ApiService(AvistamientoRepository avistamientos, NotaRepository notas) {
+        this.avistamientos = avistamientos;
+        this.notas = notas;
     }
 
-    // "lugar" se guarda como "Comuna, Región": la comuna es lo que va antes de la coma.
-    private String getComuna(String lugar) {
-        int coma = lugar.indexOf(',');
-        if (coma < 0) {
-            return lugar.trim();
-        }
-        return lugar.substring(0, coma).trim();
+   
+    private static String comuna(String lugar) {
+        int i = lugar.indexOf(',');
+        return (i < 0 ? lugar : lugar.substring(0, i)).trim();
     }
 
-    public List<Map<String, Object>> getAvistamientos(String texto) {
-        String buscado = texto.trim().toLowerCase();
-        List<Map<String, Object>> matchAvistamientos = new ArrayList<>();
-        if (buscado.isEmpty()) {
-            return matchAvistamientos;
+    public List<Resultado> buscar(String q) {
+        String texto = q.trim().toLowerCase(Locale.ROOT);
+        if (texto.isEmpty()) {
+            return List.of();
         }
+        return avistamientos.findAllByOrderByFechaHoraDesc().stream()
+            .filter(a -> a.getAve().getNombre().toLowerCase(Locale.ROOT).contains(texto)
+                      || a.getVoluntario().getNombre().toLowerCase(Locale.ROOT).contains(texto)
+                      || comuna(a.getLugar()).toLowerCase(Locale.ROOT).contains(texto))
+            .map(a -> new Resultado(a.getId(), a.getVoluntario().getNombre(),
+                a.getFechaHora().toLocalDate().toString(), a.getAve().getNombre(),
+                comuna(a.getLugar()), notas.promedio(a.getId())))
+            .toList();
+    }
 
-        List<Avistamiento> avistamientos = avistamientoRepository.findAllByOrderByFechaHoraDesc();
-        for (Avistamiento av : avistamientos) {
-            String ave = av.getAve().getNombre();
-            String voluntario = av.getVoluntario().getNombre();
-            String comuna = getComuna(av.getLugar());
-
-            if (ave.toLowerCase().contains(buscado)
-                    || voluntario.toLowerCase().contains(buscado)
-                    || comuna.toLowerCase().contains(buscado)) {
-                Map<String, Object> data = new HashMap<>();
-                data.put("id", av.getId());
-                data.put("voluntario", voluntario);
-                data.put("dia", av.getFechaHora().toLocalDate().toString());
-                data.put("ave", ave);
-                data.put("comuna", comuna);
-                data.put("nota", notaRepository.promedio(av.getId()));
-                matchAvistamientos.add(data);
-            }
+    /** Guarda la nota y devuelve el nuevo promedio; null si el avistamiento no existe. */
+    public Double evaluar(Integer avistamientoId, int nota) {
+        Avistamiento a = avistamientos.findById(avistamientoId).orElse(null);
+        if (a == null) {
+            return null;
         }
-        return matchAvistamientos;
+        notas.save(new Nota(a, nota));
+        return notas.promedio(avistamientoId);
     }
 }
